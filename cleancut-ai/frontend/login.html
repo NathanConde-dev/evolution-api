@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CleanCut IA</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-xl);
+            max-width: 450px;
+            width: 100%;
+            padding: 3rem;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .strength-bar-fill {
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .strength-weak { background: var(--danger-color); width: 33%; }
+        .strength-medium { background: var(--warning-color); width: 66%; }
+        .strength-strong { background: var(--success-color); width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>CleanCut IA</h1>
+            <p>Remova fundos com inteligência artificial</p>
+        </div>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" data-tab="login">Entrar</div>
+            <div class="auth-tab" data-tab="register">Criar Conta</div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active">
+            <div id="login-alert"></div>
+
+            <div class="form-group">
+                <label class="form-label" for="login-email">Email</label>
+                <input 
+                    type="email" 
+                    id="login-email" 
+                    class="form-control" 
+                    placeholder="seu@email.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="login-password">Senha</label>
+                <input 
+                    type="password" 
+                    id="login-password" 
+                    class="form-control" 
+                    placeholder="••••••••"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full" id="login-btn">
+                Entrar
+            </button>
+
+            <div class="text-center mt-3">
+                <a href="#" id="forgot-password-link">Esqueceu sua senha?</a>
+            </div>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="auth-form">
+            <div id="register-alert"></div>
+
+            <div class="form-group">
+                <label class="form-label" for="register-email">Email</label>
+                <input 
+                    type="email" 
+                    id="register-email" 
+                    class="form-control" 
+                    placeholder="seu@email.com"
+                    required
+                >
+                <small class="text-secondary">
+                    Não aceitamos emails temporários
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="register-password">Senha</label>
+                <input 
+                    type="password" 
+                    id="register-password" 
+                    class="form-control" 
+                    placeholder="••••••••"
+                    required
+                >
+                <div class="strength-bar">
+                    <div class="strength-bar-fill" id="strength-bar"></div>
+                </div>
+                <div class="password-strength" id="password-strength"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="register-confirm-password">Confirmar Senha</label>
+                <input 
+                    type="password" 
+                    id="register-confirm-password" 
+                    class="form-control" 
+                    placeholder="••••••••"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full" id="register-btn">
+                Criar Conta Grátis
+            </button>
+
+            <p class="text-center mt-3" style="font-size: 0.875rem; color: var(--text-secondary);">
+                Ao criar uma conta, você concorda com nossos Termos de Uso
+            </p>
+        </form>
+
+        <div class="back-link">
+            <a href="/">← Voltar para página inicial</a>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/utils.js"></script>
+    <script>
+        // Redirect if already authenticated
+        redirectIfAuthenticated();
+
+        // Tab switching
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                // Update active tab
+                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active form
+                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+                document.getElementById(`${tabName}-form`).classList.add('active');
+            });
+        });
+
+        // Login form submission
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const alertDiv = document.getElementById('login-alert');
+            const btn = document.getElementById('login-btn');
+            
+            alertDiv.innerHTML = '';
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
+            
+            try {
+                await login(email, password);
+                showToast('Login realizado com sucesso!', 'success');
+                window.location.href = '/dashboard';
+            } catch (error) {
+                alertDiv.innerHTML = `<div class="alert alert-error">${error.message}</div>`;
+                btn.disabled = false;
+                btn.textContent = 'Entrar';
+            }
+        });
+
+        // Register form submission
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const alertDiv = document.getElementById('register-alert');
+            const btn = document.getElementById('register-btn');
+            
+            alertDiv.innerHTML = '';
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alertDiv.innerHTML = '<div class="alert alert-error">As senhas não coincidem</div>';
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = 'Criando conta...';
+            
+            try {
+                await register(email, password, confirmPassword);
+                showToast('Conta criada com sucesso!', 'success');
+                window.location.href = '/dashboard';
+            } catch (error) {
+                alertDiv.innerHTML = `<div class="alert alert-error">${error.message}</div>`;
+                btn.disabled = false;
+                btn.textContent = 'Criar Conta Grátis';
+            }
+        });
+
+        // Password strength indicator
+        document.getElementById('register-password').addEventListener('input', (e) => {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('strength-bar');
+            const strengthText = document.getElementById('password-strength');
+            
+            if (password.length === 0) {
+                strengthBar.className = 'strength-bar-fill';
+                strengthText.textContent = '';
+                return;
+            }
+            
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            if (strength <= 1) {
+                strengthBar.className = 'strength-bar-fill strength-weak';
+                strengthText.textContent = 'Senha fraca';
+                strengthText.style.color = 'var(--danger-color)';
+            } else if (strength <= 2) {
+                strengthBar.className = 'strength-bar-fill strength-medium';
+                strengthText.textContent = 'Senha média';
+                strengthText.style.color = 'var(--warning-color)';
+            } else {
+                strengthBar.className = 'strength-bar-fill strength-strong';
+                strengthText.textContent = 'Senha forte';
+                strengthText.style.color = 'var(--success-color)';
+            }
+        });
+
+        // Forgot password
+        document.getElementById('forgot-password-link').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = prompt('Digite seu email para recuperação de senha:');
+            
+            if (email) {
+                try {
+                    await requestPasswordReset(email);
+                    showToast('Instruções enviadas para seu email', 'success');
+                } catch (error) {
+                    showToast(error.message, 'error');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

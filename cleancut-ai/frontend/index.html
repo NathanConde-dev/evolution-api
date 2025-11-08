@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanCut IA - Remova Fundos de Vídeos e Imagens com IA</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Landing Page Specific Styles */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .features {
+            padding: 5rem 0;
+            background-color: var(--light-bg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing {
+            padding: 5rem 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-color);
+            border-width: 3px;
+            position: relative;
+        }
+
+        .pricing-card.featured::before {
+            content: 'MAIS POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .price-period {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--success-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .footer {
+            background: var(--darker-bg);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: var(--shadow-md);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .navbar-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="navbar-brand">CleanCut IA</div>
+                <div class="navbar-links">
+                    <a href="#features">Recursos</a>
+                    <a href="#pricing">Preços</a>
+                    <a href="/login" class="btn btn-primary btn-sm">Entrar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Remova Fundos com IA em Segundos</h1>
+            <p>Transforme seus vídeos e imagens com tecnologia de ponta</p>
+            <div class="hero-buttons">
+                <a href="/login" class="btn btn-lg" style="background: white; color: var(--primary-color);">
+                    Começar Grátis - 7 Dias
+                </a>
+                <a href="#pricing" class="btn btn-outline btn-lg" style="border-color: white; color: white;">
+                    Ver Planos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="text-center">Recursos Poderosos</h2>
+            <p class="text-center text-secondary">Tudo que você precisa para criar conteúdo profissional</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎥</div>
+                    <h3>Remoção de Fundo em Vídeos</h3>
+                    <p>Remova fundos de vídeos com precisão usando IA avançada. Suporte para até 4K.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🖼️</div>
+                    <h3>Remoção de Fundo em Imagens</h3>
+                    <p>Processe imagens em segundos com resultados profissionais e transparência perfeita.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Processamento Rápido</h3>
+                    <p>Tecnologia otimizada para entregar resultados em tempo recorde.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Seleção Inteligente</h3>
+                    <p>Selecione objetos específicos para preservar com ferramentas intuitivas.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Armazenamento Seguro</h3>
+                    <p>Seus projetos ficam disponíveis por 24 horas para download.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>100% Seguro</h3>
+                    <p>Seus arquivos são protegidos e deletados automaticamente após o período.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="text-center">Planos para Todos</h2>
+            <p class="text-center text-secondary">Escolha o plano ideal para suas necessidades</p>
+            
+            <div class="pricing-grid">
+                <!-- Free Plan -->
+                <div class="pricing-card">
+                    <h3>Gratuito</h3>
+                    <div class="price">R$ 0</div>
+                    <div class="price-period">7 dias de teste</div>
+                    <ul class="features-list">
+                        <li>3 uploads por dia</li>
+                        <li>Resolução até 720p</li>
+                        <li>Suporte básico</li>
+                        <li>Armazenamento 24h</li>
+                    </ul>
+                    <a href="/login" class="btn btn-outline w-full">Começar Grátis</a>
+                </div>
+
+                <!-- Intermediate Plan -->
+                <div class="pricing-card featured">
+                    <h3>Intermediário</h3>
+                    <div class="price">R$ 50<span class="price-period">/mês</span></div>
+                    <div class="price-period">Compromisso de 12 meses</div>
+                    <ul class="features-list">
+                        <li>30 uploads por mês</li>
+                        <li>Resolução até 1080p</li>
+                        <li>Processamento prioritário</li>
+                        <li>Suporte por email</li>
+                        <li>Armazenamento 24h</li>
+                    </ul>
+                    <a href="/login" class="btn btn-primary w-full">Assinar Agora</a>
+                </div>
+
+                <!-- Premium Plan -->
+                <div class="pricing-card">
+                    <h3>Premium</h3>
+                    <div class="price">R$ 360<span class="price-period">/mês</span></div>
+                    <div class="price-period">
+                        <s>R$ 600</s> - 40% OFF por 12 meses
+                    </div>
+                    <ul class="features-list">
+                        <li>Uploads ilimitados</li>
+                        <li>Resolução até 4K</li>
+                        <li>Prioridade máxima</li>
+                        <li>Suporte prioritário</li>
+                        <li>Armazenamento 24h</li>
+                        <li>Recursos exclusivos</li>
+                    </ul>
+                    <a href="/login" class="btn btn-secondary w-full">Assinar Premium</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para Começar?</h2>
+            <p>Experimente grátis por 7 dias. Sem cartão de crédito necessário.</p>
+            <a href="/login" class="btn btn-lg" style="background: white; color: var(--primary-color); margin-top: 2rem;">
+                Criar Conta Grátis
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 CleanCut IA. Todos os direitos reservados.</p>
+            <p style="margin-top: 1rem; color: rgba(255, 255, 255, 0.7);">
+                Remova fundos de vídeos e imagens com inteligência artificial
+            </p>
+        </div>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/utils.js"></script>
+</body>
+</html>
